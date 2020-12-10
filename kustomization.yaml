@@ -1,0 +1,4 @@
+resources:
+- linkerd/linkerd.yaml
+patchesStrategicMerge:
+- linkerd/grafana.yaml
