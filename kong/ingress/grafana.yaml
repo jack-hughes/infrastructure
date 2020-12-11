@@ -1,0 +1,27 @@
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: set-l5d-header
+  namespace: linkerd
+plugin: request-transformer
+config:
+  add:
+    headers:
+    - l5d-dst-override:$(headers.host).svc.cluster.local
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: grafana-ingress
+  namespace: linkerd
+  annotations:
+    kubernetes.io/ingress.class: "kong"
+    konghq.com/plugins: set-l5d-header
+spec:
+  rules:
+    - host: grafana.jackhughes.dev
+      http:
+        paths:
+          - backend:
+              serviceName: linkerd-grafana
+              servicePort: 3000

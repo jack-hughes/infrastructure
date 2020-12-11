@@ -1,4 +1,6 @@
 resources:
 - linkerd/linkerd.yaml
+- kong/gateway.yaml
+- kong/ingress/grafana.yaml
 patchesStrategicMerge:
 - linkerd/grafana.yaml
